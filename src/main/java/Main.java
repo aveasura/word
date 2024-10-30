@@ -53,15 +53,15 @@ public class Main {
         int errors = 0;
 
         while (!hiddenWord.equals(randomWord)) {
-            System.out.println(hiddenWord);
-            System.out.println("Введите букву");
-            String input = input(sc);
+            System.out.println(hiddenWord + "\nВведите букву");
 
-            if (isBlankString(input) || isDuplicate(guessedLetters, input.charAt(0))) {
+            String input = input(sc);
+            if (isBlankString(input)) {
                 System.out.println("Вы ввели пустую строку");
                 continue;
+            } else if (isDuplicate(guessedLetters, input.charAt(0))) {
+                continue;
             }
-
             char userInput = input.charAt(0);
             guessedLetters.add(userInput);
 
@@ -81,7 +81,6 @@ public class Main {
 
     public static String revealGuessedLetters(String word, String currentDisplay, char guess) {
         StringBuilder sb = new StringBuilder(currentDisplay);
-
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) == guess) {
                 sb.setCharAt(i, guess);
@@ -99,9 +98,7 @@ public class Main {
     }
 
     public static boolean isBlankString(String input) {
-        return Optional.ofNullable(input)
-                .filter(Predicate.not(String::isBlank))
-                .isEmpty();
+        return Optional.ofNullable(input).filter(Predicate.not(String::isBlank)).isEmpty();
     }
 
     public static String input(Scanner sc) {
